@@ -61,8 +61,6 @@ Training_Seq(1,:)=Training_Data(1:end,1);
 Training_States(1,:)=Training_Data(1:end,2);
 Evaluation_Seq(1,:)=Evaluation_Data(1:end,1);
 Evaluation_States(1,:)=Evaluation_Data(1:end,2);
-aws s3 sync --no-sign-request --region ap-south-1 "s3://cse-cic-ids2018/" ribhu-dataset
-ap-south-1	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Part 4: Training
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
