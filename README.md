@@ -8,15 +8,15 @@ To run this code, simply, run the `main.m` MATLAB script.
 
 The following briefly describes the various files included in this folder:
 
-* `count_based.m`: obtains the count-based parameters for HMM initialisation.
-* `evaluate.m`: computes the detection and prediction accuracy.
-* `filter_alerts.m`: removes non-common observations to ensure similar unique observations in both training and evaluation dataset.
-* `initialise_random`: obtains initial random HMM parameters.
-* `main.m`: Main file implementing all the experiments. The file plots the results for the detection of all states (AS), the current state (CS) and the next state (NS).
-* `next_state.m`: computes the next state. First, the next observation is obtained and is then appended to the observation sequence. Thereafter, the Viterbi decoding is applied to estimate the next state.
-* `normalise_rows.m`: assigns small values to zeroes and normalises the rows of HMM parameters so that each row sums to unity. Also, if negative parameters are obtained, they are scaled to start from zero and then normalised.
-* `preprocess.m`: divides the dataset into training and evaluation using the sequential sampling. The dataset has already been processed to reduce the run time, otherwise, the essential fields ought to be extracted from the Snort IDS alerts then remove duplicates and assign symbols for both states and observations. 
-* `string_num.m`: converts a data string to a number
+* `count_based.py`: obtains the count-based parameters for HMM initialisation.
+* `evaluate.py`: computes the detection and prediction accuracy.
+* `filter_alerts.py`: removes non-common observations to ensure similar unique observations in both training and evaluation dataset.
+* `initialise_random.py`: obtains initial random HMM parameters.
+* `main.py`: Main file implementing all the experiments. The file plots the results for the detection of all states (AS), the current state (CS) and the next state (NS).
+* `next_state.py`: computes the next state. First, the next observation is obtained and is then appended to the observation sequence. Thereafter, the Viterbi decoding is applied to estimate the next state.
+* `normalise_rows.py`: assigns small values to zeroes and normalises the rows of HMM parameters so that each row sums to unity. Also, if negative parameters are obtained, they are scaled to start from zero and then normalised.
+* `preprocess.py`: divides the dataset into training and evaluation using the sequential sampling. The dataset has already been processed to reduce the run time, otherwise, the essential fields ought to be extracted from the Snort IDS alerts then remove duplicates and assign symbols for both states and observations. 
+* `string_num.py`: converts a data string to a number
 * `Dataset.mat`: stores the Snort alerts including the assigned symbols and states. 
 
 ### Authors
