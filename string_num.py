@@ -1,11 +1,11 @@
 import numpy as np
 
 def string_num(Data1):
-    len_data1 = len(Data1)
-    Data2 = np.zeros((len_data1, 2))
-
-    for i in range(len_data1):
+    len_ = len(Data1)
+    Data2 = np.zeros_like(Data1, dtype=np.float64)
+    
+    for i in range(len_):
         for j in range(2):
-            Data2[i, j] = int(Data1[i, j])
-
+            Data2[i,j] = float(Data1[i,j])
+    
     return Data2
