@@ -52,8 +52,13 @@ def train_test_model(data_frames,init_type,Maxiter,Tol,TrData_Percent):
 
     #1. Baum Welch Training
     #1A: Uniform initialization
-    A = np.ones((N, N)) / N
-    B = np.ones((N, M)) / M
+    if init_type=='Uniform':
+        A = np.ones((N, N)) / N
+        B = np.ones((N, M)) / M
+    elif init_type=='Random':
+        A = np.random.rand(N, N)
+        B = np.random.rand(N, M)
+    
     print('Training 1 of 2: BW Uniform, Random, and Count')
 
     model = hmm.CategoricalHMM(n_components=N, algorithm='viterbi', n_iter=Maxiter, tol=Tol)
@@ -68,7 +73,8 @@ def train_test_model(data_frames,init_type,Maxiter,Tol,TrData_Percent):
     print('Emission Matrix\n',EstB)
     A_normalized =normalise_rows(EstA,Eps)
     B_normalized =normalise_rows(EstB,Eps)
-
+    model.transmat_ = A_normalized
+    model.emissionprob_ = B_normalized
     window_size = 150
     avg_acc_all_states, avg_acc_curr_state, avg_acc_next_state,num_experiments,start_points = evaluate(model,window_size, Evaluation_Seq, Evaluation_States, A_normalized,B_normalized)
     print(avg_acc_all_states, avg_acc_curr_state, avg_acc_next_state)

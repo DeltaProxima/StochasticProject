@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 from scipy.io import loadmat
 import pandas as pd
+from plot_graphs import plot_graphs
 from main import train_test_model
 
 def main_demo():    
@@ -13,7 +14,7 @@ def main_demo():
         st.sidebar.success('File successfully uploaded!!', icon="🎉")
         print(data_frames.head())
     #select type of initialization from count based, random or uniform
-    init_type = st.sidebar.selectbox("Select type of initialization",("Count Based","Random","Uniform"))
+    init_type = st.sidebar.selectbox("Select type of initialization",("Uniform","Count Based","Random"))
     #enter number of interations
     Maxiter = st.sidebar.slider("Enter number of iterations",min_value=1,max_value=1000,value=500,step=50)
     #enter convergence threshold
@@ -25,7 +26,10 @@ def main_demo():
     if btn:
         btn = False
         if uploaded_file is not None:
-            train_test_model(data_frames,init_type,Maxiter,Tol,TrData_Percent)
+            model,avg_acc_all_states, avg_acc_curr_state, avg_acc_next_state,num_experiments,start_points=train_test_model(data_frames,init_type,Maxiter,Tol,TrData_Percent)
+            data_dict={}
+            data_dict[init_type]={'All States':avg_acc_all_states,'Current State':avg_acc_curr_state,'Next State':avg_acc_next_state}
+            plot_graphs(init_type,avg_acc_all_states, avg_acc_curr_state, avg_acc_next_state)
         else:
             st.warning('No file uploaded!!', icon="⚠️")
 
@@ -46,7 +50,7 @@ def main_demo():
 
     st.table(data={"Alerts":alert_names})
     st.write("\nThe HMM Model \n")
-    st.image(r"hmm_image.png",width=800)
+    st.image(r"./images/hmm_image.png",width=800)
     st.write("\n")
     st.write("The HMM that we trained has 6 hidden states that indicated the different scenarios in the network. The different states are shown in the table below: ")
     st.table(data={"States":states_names})
@@ -57,7 +61,38 @@ def main_demo():
         st.write("The number of rows in the file are: ",data_frames.shape[0])
         st.write(data_frames.head())      
 
+def all_initialization_type():
+    uploaded_file = st.sidebar.file_uploader("Choose a file")
+    if uploaded_file is not None:
+        data_set = pd.read_csv(uploaded_file,header=None)
+        data_frames = pd.DataFrame(data_set)
+        st.sidebar.success('File successfully uploaded!!', icon="🎉")
+        print(data_frames.head())
+    #select type of initialization from count based, random or uniform
+    Maxiter = st.sidebar.slider("Enter number of iterations",min_value=1,max_value=1000,value=500,step=50)
+    #enter convergence threshold
+    Tol = 1e-6
+    #enter percentage of training data
+    TrData_Percent = st.sidebar.slider("Enter percentage of training data",min_value=1,max_value=100,value=70,step=5)
+    #run button
+    btn = st.sidebar.button("Run")
+    if btn:
+        btn = False
+        if uploaded_file is not None:
+            model_uniform,avg_acc_all_states_uniform, avg_acc_curr_state_uniform, avg_acc_next_state_uniform,num_experiments_uniform,start_points_uniform=train_test_model(data_frames,"Uniform",Maxiter,Tol,TrData_Percent)
 
+            model_count,avg_acc_all_states_count, avg_acc_curr_state_count, avg_acc_next_state_count,num_experiments_count,start_points_count=train_test_model(data_frames,"Count Based",Maxiter,Tol,TrData_Percent)
+
+            model_random,avg_acc_all_states_random, avg_acc_curr_state_random, avg_acc_next_state_random,num_experiments_random,start_points_random=train_test_model(data_frames,"Random",Maxiter,Tol,TrData_Percent)
+
+            data_dict={}
+            data_dict["Uniform"]={"All States":avg_acc_all_states_uniform,"Current State":avg_acc_curr_state_uniform,"Next State":avg_acc_next_state_uniform}
+            data_dict["Count Based"]={"All States":avg_acc_all_states_count,"Current State":avg_acc_curr_state_count,"Next State":avg_acc_next_state_count}
+            data_dict["Random"]={"All States":avg_acc_all_states_random,"Current State":avg_acc_curr_state_random,"Next State":avg_acc_next_state_random}
+
+            plot_graphs(data_dict)
+        else:
+            st.warning('No file uploaded!!', icon="⚠️")
 st.set_page_config(
     page_title="EE336 Project Presentation",
     page_icon="🐱‍💻",
@@ -65,7 +100,8 @@ st.set_page_config(
 st.title("Attack Detection using HMM")
 st.sidebar.markdown("Select the page to view")
 page_names_to_funcs = {
-    "Main Page": main_demo
+    "Main Page": main_demo,
+    "Compare Initialization Types": all_initialization_type,
 }
 
 selected_page = st.sidebar.selectbox("Select a page", page_names_to_funcs.keys())
