@@ -1,14 +1,4 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Version:               1.0                                                                                   
-%Date:                  23 July 2020                       
-%Authors:               Timothy Chadza, Konstantinos Kyriakopoulos & Sangarapillai Lambotharan                 
-%Affiliation:           Loughborough University,Loughborough,LE11 3TU, UK                                    
-%Corresponding Author:  Timothy Chadza, tchadza@poly.ac.mw
-%Copyright:             This is published under GNU GENERAL PUBLIC LICENSE Version 3. If you use this code, 
-%                       please, cite our paper: T. Chadza, K. G. Kyriakopoulos and S. Lambotharan, 
-%                       "Contemporary Sequential Network Attacks Prediction using Hidden Markov Model," 2019 
-%                       17th International Conference on Privacy, Security and Trust (PST), Fredericton, NB, 
-%                       Canada, 2019, pp. 1-3.
 %Brief Description:     Part 1: Predefined variables
 %                               These can be modified accordingly.
 %                       Part 2: Loading Dataset
